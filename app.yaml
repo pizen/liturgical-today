@@ -1,1 +1,9 @@
 runtime: python37
+
+handlers:
+- url: /
+  static_files: static/index.html
+  upload: static/index.html
+
+- url: /reformed/.*
+  script: auto
