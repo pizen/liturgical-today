@@ -13,11 +13,14 @@ def reformed(date_str):
     except Exception:
         abort(400)
 
-    return Response(
+    resp = Response(
         json.dumps(calendar.lookup(d)),
         status=200,
         mimetype='application/json'
     )
+    resp.cache_control.public = True
+    resp.cache_control.max_age = 86400
+    return resp
 
 
 if __name__ == '__main__':

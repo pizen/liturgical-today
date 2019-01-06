@@ -1,5 +1,7 @@
 runtime: python37
 
+default_expiration: "1d"
+
 handlers:
 - url: /
   static_files: static/index.html
