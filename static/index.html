@@ -1,0 +1,24 @@
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Ribeye+Marrow" rel="stylesheet">
+    <script type="text/javascript">
+        function dateToYMD(date) {
+            var d = date.getDate();
+            var m = date.getMonth() + 1;
+            return '' + date.getFullYear() + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
+        }
+        function load() {
+            fetch('./reformed/' + dateToYMD(new Date())).then(function(response) {
+                response.json().then(function(data) {
+                    document.body.style.background = data[1];
+                    document.getElementById("name").textContent = data[0];
+                    console.log(data);
+                });
+            });
+        }
+    </script>
+</head>
+<body onload="load();">
+    <h1 style="font-family: 'Ribeye Marrow', cursive; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Today is: <a id="name"></a></h1>
+</body>
+</html>
