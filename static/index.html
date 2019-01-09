@@ -11,7 +11,7 @@
             fetch('./reformed/' + dateToYMD(new Date())).then(function(response) {
                 response.json().then(function(data) {
                     document.body.style.background = data[1];
-                    document.getElementById("name").textContent = data[0];
+                    document.getElementById("name").textContent = 'Today is: ' + data[0];
                     console.log(data);
                 });
             });
@@ -19,6 +19,6 @@
     </script>
 </head>
 <body onload="load();">
-    <h1 style="font-family: 'Ribeye Marrow', cursive; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Today is: <a id="name"></a></h1>
+    <h1 id="name" style="font-family: 'Ribeye Marrow', cursive; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></h1>
 </body>
 </html>
