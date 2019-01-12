@@ -2,23 +2,53 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Ribeye+Marrow" rel="stylesheet">
     <script type="text/javascript">
+        var current_date = new Date();
         function dateToYMD(date) {
             var d = date.getDate();
             var m = date.getMonth() + 1;
             return '' + date.getFullYear() + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
         }
-        function load() {
-            fetch('./reformed/' + dateToYMD(new Date())).then(function(response) {
+        function load(date) {
+            current_date = date;
+            fetch('./reformed/' + dateToYMD(date)).then(function(response) {
                 response.json().then(function(data) {
                     document.body.style.background = data[1];
-                    document.getElementById("name").textContent = 'Today is: ' + data[0];
+                    document.getElementById("name").textContent = date.toLocaleDateString('en-us', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}) + ', is: ' + data[0];
                     console.log(data);
                 });
             });
         }
+        function nextSunday() {
+            var sunday = new Date(current_date);
+            sunday.setDate(sunday.getDate() + (7-current_date.getDay()));
+            load(sunday);
+        }
+        function prevSunday() {
+            var sunday = new Date(current_date);
+            sunday.setDate(sunday.getDate() - (current_date.getDay() == 0 ? 7 : current_date.getDay()));
+            load(sunday);
+        }
+        function nextDay() {
+            var next = new Date(current_date);
+            next.setDate(next.getDate() + 1);
+            load(next);
+        }
+        function prevDay() {
+            var prev = new Date(current_date);
+            prev.setDate(prev.getDate() - 1);
+            load(prev);
+        }
     </script>
+    <title>Liturgical Color for Today</title>
 </head>
-<body onload="load();">
-    <h1 id="name" style="font-family: 'Ribeye Marrow', cursive; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></h1>
+<body onload="load(current_date);">
+    <div style="font-family: 'Ribeye Marrow', cursive; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50px">
+        <a id="name"></a>
+        <br><br>
+        <button onclick="prevSunday();">&lt;&lt; Previous Sunday</<button>
+        <button onclick="prevDay();">&lt; Previous Day</<button>
+        <button onclick="nextDay();">Next Day &gt;</<button>
+        <button onclick="nextSunday();">Next Sunday &gt;&gt;</<button>
+    </div>
 </body>
 </html>
