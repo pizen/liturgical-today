@@ -1,6 +1,30 @@
 <html>
 <head>
     <link href="https://fonts.googleapis.com/css?family=Ribeye+Marrow" rel="stylesheet">
+    <style>
+        .main {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+        }
+        .text {
+            font-family: 'Ribeye Marrow', cursive;
+            font-size: 50px
+        }
+        button {
+            font: inherit;
+            color: inherit;
+            font-size: 25px;
+            border: none;
+            padding: 10px;
+            margin: 10px;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
     <script type="text/javascript">
         var current_date = new Date();
         function dateToYMD(date) {
@@ -12,8 +36,21 @@
             current_date = date;
             fetch('./reformed/' + dateToYMD(date)).then(function(response) {
                 response.json().then(function(data) {
-                    document.body.style.background = data[1];
-                    document.getElementById("name").textContent = date.toLocaleDateString('en-us', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}) + ', is: ' + data[0];
+                    if(data[1] === 'green') {
+                        document.body.style.background = '#137524';
+                        document.body.style.color =  'white';
+                    } else if(data[1] === 'red') {
+                        document.body.style.background = '#e81212';
+                        document.body.style.color =  'black';
+                    } else if (data[1] === 'purple') {
+                        document.body.style.background = '#631584';
+                        document.body.style.color =  'white';
+                    } else {
+                        document.body.style.background = 'white';
+                        document.body.style.color =  'black';
+                    }
+                    document.getElementById("date").textContent = date.toLocaleDateString('en-us', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}) + ', is:';
+                    document.getElementById("name").textContent = data[0];
                     console.log(data);
                 });
             });
@@ -42,13 +79,15 @@
     <title>Liturgical Color for Today</title>
 </head>
 <body onload="load(current_date);">
-    <div style="font-family: 'Ribeye Marrow', cursive; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50px">
-        <a id="name"></a>
-        <br><br>
-        <button onclick="prevSunday();">&lt;&lt; Previous Sunday</<button>
-        <button onclick="prevDay();">&lt; Previous Day</<button>
-        <button onclick="nextDay();">Next Day &gt;</<button>
-        <button onclick="nextSunday();">Next Sunday &gt;&gt;</<button>
+    <div class="main">
+        <div class="text">
+            <a id="date"></a><br>
+            <a id="name"></a><br>
+            <button onclick="prevSunday();">&lt;&lt; Previous Sunday</<button>
+            <button onclick="prevDay();">&lt; Previous Day</<button>
+            <button onclick="nextDay();">Next Day &gt;</<button>
+            <button onclick="nextSunday();">Next Sunday &gt;&gt;</<button>
+        </div>
     </div>
 </body>
 </html>
