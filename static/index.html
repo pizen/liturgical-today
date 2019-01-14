@@ -12,7 +12,7 @@
         }
         .text {
             font-family: 'Ribeye Marrow', cursive;
-            font-size: 50px
+            font-size: 70px
         }
         button {
             font: inherit;
@@ -76,6 +76,9 @@
             prev.setDate(prev.getDate() - 1);
             load(prev);
         }
+        function today() {
+            load(new Date());
+        }
     </script>
     <title>Liturgical Color for Today</title>
 </head>
@@ -86,6 +89,7 @@
             <a id="name"></a><br>
             <button onclick="prevSunday();">&lt;&lt; Previous Sunday</<button>
             <button onclick="prevDay();">&lt; Previous Day</<button>
+            <button onclick="today();">Today</button>
             <button onclick="nextDay();">Next Day &gt;</<button>
             <button onclick="nextSunday();">Next Sunday &gt;&gt;</<button>
         </div>
